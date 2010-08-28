@@ -635,6 +635,8 @@ DesktopWindow::processMessage(UINT msg, WPARAM wParam, LPARAM lParam) {
         return 0;
       }
     }
+	  if (wParam == VK_PROCESSKEY) 
+		  wParam = ImmGetVirtualKey(handle);	// gon
 	case WM_SYSKEYDOWN:
 	case WM_SYSKEYUP:
     kbd.keyEvent(callback, wParam, lParam, (msg == WM_KEYDOWN) || (msg == WM_SYSKEYDOWN));
