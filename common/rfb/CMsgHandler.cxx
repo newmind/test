@@ -96,4 +96,8 @@ void CMsgHandler::copyRect(const Rect& r, int srcX, int srcY)
 {
 }
 
+void CMsgHandler::acceptRequest(int timeout, unsigned int key, unsigned int ip, char* info_string) // gon
+{
+
+}
 

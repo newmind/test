@@ -35,5 +35,12 @@ namespace rfb {
   private:
     UserPasswdGetter* upg;
   };
+
+  // gon
+  class CSecurityInnotiveVNC : public CSecurityVncAuth {
+  public:
+	CSecurityInnotiveVNC(UserPasswdGetter* pg) : CSecurityVncAuth(pg) { }
+	virtual int getType() const {return secTypeInnotiveVNC;};
+  };
 }
 #endif

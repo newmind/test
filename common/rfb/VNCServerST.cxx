@@ -135,6 +135,10 @@ void VNCServerST::removeSocket(network::Socket* sock) {
       // - Delete the per-Socket resources
       delete *ci;
 
+	  if (authClientCount() == 0) { // gon
+		// notify, queryConnection 요청중이라면 자동 수락 할 수 있게.
+	  }
+
       // - Check that the desktop object is still required
       if (authClientCount() == 0 && desktopStarted) {
         slog.debug("no authenticated clients - stopping desktop");
@@ -353,6 +357,15 @@ int VNCServerST::authClientCount() {
       count++;
   }
   return count;
+}
+
+VNCSConnectionST* VNCServerST::getAuthClient() {	// gon
+	std::list<VNCSConnectionST*>::iterator ci;
+	for (ci = clients.begin(); ci != clients.end(); ci++) {
+		if ((*ci)->authenticated())
+			return *ci;
+	}
+	return NULL;
 }
 
 inline bool VNCServerST::needRenderedCursor()

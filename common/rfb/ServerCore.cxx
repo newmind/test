@@ -53,7 +53,7 @@ rfb::BoolParameter rfb::Server::neverShared
 ("NeverShared",
  "Never treat incoming connections as shared, regardless of the client-"
  "specified setting",
- false);
+ true);	// gon - NeverShared
 rfb::BoolParameter rfb::Server::disconnectClients
 ("DisconnectClients",
  "Disconnect existing clients if an incoming connection is non-shared. "
@@ -80,3 +80,7 @@ rfb::BoolParameter rfb::Server::queryConnect
 ("QueryConnect",
  "Prompt the local user to accept or reject incoming connections.",
  false);
+rfb::BoolParameter rfb::Server::queryConnectToRemote	// gon
+("QueryConnectToRemote",
+ "Prompt the remote user to accept or reject incoming connections.",
+ true);

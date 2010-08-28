@@ -105,6 +105,8 @@ namespace rfb {
     // accepts the server's default pixel format and it uses a colour map.
     virtual void setInitialColourMap();
 
+	virtual void acceptRequestResponse(int result, rdr::U32 key, char* reason); // gon
+
     // setAccessRights() allows a security package to limit the access rights
     // of a VNCSConnectionST to the server.  How the access rights are treated
     // is up to the derived class.
@@ -169,6 +171,8 @@ namespace rfb {
     // any
     const SSecurity* ssecurity() const { return security; }
 
+	char* getInfoString() const { return m_pInfo; }	// gon
+
   protected:
     void setState(stateEnum s) { state_ = s; }
 
@@ -188,6 +192,8 @@ namespace rfb {
     SSecurityFactory* securityFactory;
     stateEnum state_;
     bool reverseConnection;
+
+	char* m_pInfo;	// gon
   };
 }
 #endif

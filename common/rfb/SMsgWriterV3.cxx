@@ -167,3 +167,13 @@ void SMsgWriterV3::endRect()
     rectsSent[currentEncoding]++;
   }
 }
+
+void SMsgWriterV3::writeAcceptRequest(rdr::U32 key, rdr::U32 ip, const char* info_string) {	// gon
+	startMsg(msgTypeAcceptRequest);
+	os->writeU8(10);
+	os->pad(2);
+	os->writeU32(key);
+	os->writeU32(ip);
+	os->writeString(info_string);
+	endMsg();
+}

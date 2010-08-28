@@ -52,6 +52,8 @@ namespace rfb {
     virtual void pointerEvent(const Point& pos, int buttonMask);
     virtual void clientCutText(const char* str, int len);
 
+	virtual void acceptRequestResponse(int result, rdr::U32 key, char* reason = ""); // gon
+
     ConnParams* getConnParams() { return cp; }
     rdr::OutStream* getOutStream() { return os; }
 

@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="winvnc"
 	ProjectGUID="{DA814B9E-141A-4044-95AD-6E8C6C13D67E}"
+	RootNamespace="winvnc"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -692,11 +693,11 @@
 				>
 			</File>
 			<File
-				RelativePath="java\logo150x150.gif"
+				RelativePath="..\..\common\javabin\logo150x150.gif"
 				>
 			</File>
 			<File
-				RelativePath="..\..\common\javabin\logo150x150.gif"
+				RelativePath="java\logo150x150.gif"
 				>
 			</File>
 			<File

@@ -76,6 +76,8 @@ namespace winvnc {
                                                           const char* userName,
                                                           char** reason);
 
+	virtual void acceptRequestResponse(rfb::VNCServerST::queryResult result, rdr::U32 key, char* reason);	// gon
+
     // SocketManager::AddressChangeNotifier interface
     // Used to keep tray icon up to date
     virtual void processAddressChange(network::SocketListener* sl);

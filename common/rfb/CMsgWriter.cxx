@@ -124,3 +124,15 @@ void CMsgWriter::clientCutText(const char* str, int len)
   os->writeBytes(str, len);
   endMsg();
 }
+
+void CMsgWriter::acceptRequestResponse(int result, rdr::U32 key, char* reason) // gon
+{
+	startMsg(msgTypeAcceptRequestResponse);
+	os->writeU8(result);
+	os->pad(2);
+	os->writeU32(key);
+	if (result != 0) {
+		os->writeString(reason);
+	}
+	endMsg();
+}

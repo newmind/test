@@ -50,3 +50,7 @@ void SMsgHandler::framebufferUpdateRequest(const Rect& r, bool incremental)
 void SMsgHandler::supportsLocalCursor()
 {
 }
+
+void SMsgHandler::acceptRequestResponse(int result, rdr::U32 key, char* reason)
+{
+}

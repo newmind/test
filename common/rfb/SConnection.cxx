@@ -47,15 +47,20 @@ SConnection::SConnection(SSecurityFactory* secFact, bool reverseConnection_)
     reverseConnection(reverseConnection_)
 {
   defaultMajorVersion = 3;
-  defaultMinorVersion = 8;
-  if (rfb::Server::protocol3_3)
-    defaultMinorVersion = 3;
+  defaultMinorVersion = 10;	// gon
+//  if (rfb::Server::protocol3_3)
+//    defaultMinorVersion = 3;
 
+  m_pInfo = NULL; // gon
   cp.setVersion(defaultMajorVersion, defaultMinorVersion);
 }
 
 SConnection::~SConnection()
 {
+  if (m_pInfo)	// gon
+	  delete m_pInfo;
+  m_pInfo = NULL;
+
   if (security) security->destroy();
   deleteReaderAndWriter();
 }
@@ -120,18 +125,28 @@ void SConnection::processVersionMsg()
     throwConnFailedException(msg);
   }
 
-  if (cp.minorVersion != 3 && cp.minorVersion != 7 && cp.minorVersion != 8) {
-    vlog.error("Client uses unofficial protocol version %d.%d",
-               cp.majorVersion,cp.minorVersion);
-    if (cp.minorVersion >= 8)
-      cp.minorVersion = 8;
-    else if (cp.minorVersion == 7)
-      cp.minorVersion = 7;
-    else
-      cp.minorVersion = 3;
-    vlog.error("Assuming compatibility with version %d.%d",
-               cp.majorVersion,cp.minorVersion);
+  // gon
+  if (cp.minorVersion != 10) {
+	  // not supported protocol version
+	  char msg[256];
+	  sprintf(msg,"Error: client needs protocol version %d.%d, server has %d.%d",
+		  cp.majorVersion, cp.minorVersion,
+		  defaultMajorVersion, defaultMinorVersion);
+	  throwConnFailedException(msg);
   }
+
+//  if (cp.minorVersion != 3 && cp.minorVersion != 7 && cp.minorVersion != 8) {
+//    vlog.error("Client uses unofficial protocol version %d.%d",
+//               cp.majorVersion,cp.minorVersion);
+//    if (cp.minorVersion >= 8)
+//      cp.minorVersion = 8;
+//    else if (cp.minorVersion == 7)
+//      cp.minorVersion = 7;
+//    else
+//      cp.minorVersion = 3;
+//    vlog.error("Assuming compatibility with version %d.%d",
+//               cp.majorVersion,cp.minorVersion);
+//  }
 
   versionReceived();
 
@@ -188,8 +203,12 @@ void SConnection::processSecurityTypeMsg()
   if (i == secTypes.end())
     throw Exception("Requested security type not available");
 
-  vlog.info("Client requests security type %s(%d)",
-            secTypeName(secType),secType);
+  // gon - InnotiveVNC
+  is->skip(3);
+  m_pInfo = is->readString();
+
+  vlog.info("Client requests security type %s(%d), info(%s)",
+            secTypeName(secType),secType, m_pInfo);
 
   try {
     state_ = RFBSTATE_SECURITY;
@@ -208,7 +227,8 @@ void SConnection::processSecurityMsg()
     bool done = security->processMsg(this);
     if (done) {
       state_ = RFBSTATE_QUERYING;
-      queryConnection(security->getUserName());
+      // queryConnection(security->getUserName()); // gon
+	  queryConnection(m_pInfo); // gon
     }
   } catch (AuthFailureException& e) {
     vlog.error("AuthFailureException: %s", e.str());
@@ -319,4 +339,8 @@ void SConnection::framebufferUpdateRequest(const Rect& r, bool incremental)
       setInitialColourMap();
     }
   }
+}
+
+void SConnection::acceptRequestResponse(int result, rdr::U32 key, char* reason) // gon
+{
 }

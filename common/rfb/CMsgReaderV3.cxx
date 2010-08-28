@@ -57,6 +57,7 @@ void CMsgReaderV3::readMsg()
     case msgTypeSetColourMapEntries: readSetColourMapEntries(); break;
     case msgTypeBell:                readBell(); break;
     case msgTypeServerCutText:       readServerCutText(); break;
+	case msgTypeAcceptRequest:       readAcceptRequest(); break;	// gon
     default:
       fprintf(stderr, "unknown message type %d\n", type);
       throw Exception("unknown message type");

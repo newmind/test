@@ -63,6 +63,8 @@ namespace rfb {
     virtual void imageRect(const Rect& r, void* pixels);
     virtual void copyRect(const Rect& r, int srcX, int srcY);
 
+	virtual void acceptRequest(int timeout, unsigned int key, unsigned int ip, char* info_string); // gon
+
     ConnParams cp;
   };
 }

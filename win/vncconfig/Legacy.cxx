@@ -139,7 +139,8 @@ void LegacyPage::LoadPrefs()
           // *** check AllowLoopback?
 
           if (winvnc3.getBool(_T("AuthRequired"), true))
-            regKey.setString(_T("SecurityTypes"), _T("VncAuth"));
+            // regKey.setString(_T("SecurityTypes"), _T("VncAuth")); // gon
+			regKey.setString(_T("SecurityTypes"), _T("InnotiveVNC")); // gon
           else
             regKey.setString(_T("SecurityTypes"), _T("None"));
 

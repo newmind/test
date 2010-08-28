@@ -61,6 +61,8 @@ namespace rfb {
 
     virtual void readSetCursor(int width, int height, const Point& hotspot);
 
+	virtual void readAcceptRequest();	// gon
+
     CMsgReader(CMsgHandler* handler, rdr::InStream* is);
 
     CMsgHandler* handler;

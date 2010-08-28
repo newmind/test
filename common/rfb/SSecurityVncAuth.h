@@ -51,5 +51,12 @@ namespace rfb {
     int responsePos;
     VncAuthPasswdGetter* pg;
   };
+
+  // gon
+  class SSecurityInnotiveVNC : public SSecurityVncAuth {
+  public:
+	  SSecurityInnotiveVNC(VncAuthPasswdGetter* pg) : SSecurityVncAuth(pg) { }
+	  virtual int getType() const {return secTypeInnotiveVNC;}
+  };
 }
 #endif

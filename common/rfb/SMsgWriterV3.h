@@ -42,6 +42,8 @@ namespace rfb {
     virtual void startRect(const Rect& r, unsigned int encoding);
     virtual void endRect();
 
+	virtual void writeAcceptRequest(rdr::U32 key, rdr::U32 ip, const char* info_string);	// gon
+
   private:
     rdr::MemOutStream* updateOS;
     rdr::OutStream* realOS;

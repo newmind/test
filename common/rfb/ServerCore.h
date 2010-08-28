@@ -44,6 +44,7 @@ namespace rfb {
     static BoolParameter acceptCutText;
     static BoolParameter sendCutText;
     static BoolParameter queryConnect;
+	static BoolParameter queryConnectToRemote;	// gon
 
   };
 

@@ -66,6 +66,7 @@ namespace rfb {
     void bell();
     void serverCutText(const char *str, int len);
     void setCursorOrClose();
+	bool acceptRequest(rdr::U32 ip, const char* info_string);	// gon
 
     // checkIdleTimeout() returns the number of milliseconds left until the
     // idle timeout expires.  If it has expired, the connection is closed and
@@ -120,6 +121,7 @@ namespace rfb {
     virtual void framebufferUpdateRequest(const Rect& r, bool incremental);
     virtual void setInitialColourMap();
     virtual void supportsLocalCursor();
+	virtual void acceptRequestResponse(int result, rdr::U32 key, char* reason); // gon
 
     // setAccessRights() allows a security package to limit the access rights
     // of a VNCSConnectioST to the server.  These access rights are applied

@@ -46,6 +46,7 @@ namespace rfb {
     virtual void setPixelFormat(const PixelFormat& pf);
     virtual void setEncodings(int nEncodings, rdr::U32* encodings);
     virtual void framebufferUpdateRequest(const Rect& r, bool incremental);
+	virtual void acceptRequestResponse(int result, rdr::U32 key, char* reason); // gon
 
     // InputHandler interface
     // The InputHandler methods will be called for the corresponding messages.

@@ -33,8 +33,8 @@ static LogWriter vlog("SSecurityFactoryStandard");
 
 StringParameter SSecurityFactoryStandard::sec_types
 ("SecurityTypes",
- "Specify which security scheme to use for incoming connections (None, VncAuth)",
- "VncAuth");
+ "Specify which security scheme to use for incoming connections (None, InnotiveVNC)",	// gon
+ "InnotiveVNC");	// gon
 
 StringParameter SSecurityFactoryStandard::rev_sec_types
 ("ReverseSecurityTypes",
@@ -53,7 +53,9 @@ SSecurity* SSecurityFactoryStandard::getSSecurity(rdr::U8 secType, bool reverseC
   switch (secType) {
   case secTypeNone: return new SSecurityNone();
   case secTypeVncAuth:
-    return new SSecurityVncAuth(&vncAuthPasswd);
+	  return new SSecurityVncAuth(&vncAuthPasswd);
+  case secTypeInnotiveVNC:	// gon
+	  return new SSecurityInnotiveVNC(&vncAuthPasswd);
   default:
     throw Exception("Security type not supported");
   }
@@ -76,7 +78,8 @@ void SSecurityFactoryStandard::getSecTypes(std::list<rdr::U8>* secTypes, bool re
 bool SSecurityFactoryStandard::isSecTypeSupported(rdr::U8 secType) {
   switch (secType) {
   case secTypeNone:
-  case secTypeVncAuth:
+//  case secTypeVncAuth:	// gon
+  case secTypeInnotiveVNC:	// gon
     return true;
   default:
     return false;

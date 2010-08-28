@@ -158,3 +158,19 @@ int CMsgReader::bpp()
 {
   return handler->cp.pf().bpp;
 }
+
+void CMsgReader::readAcceptRequest()	// gon
+{
+	int timeout = is->readU8();
+	is->skip(2);
+	rdr::U32 key = is->readU32();
+	rdr::U32 ip = is->readU32();
+	char* info_string = is->readString();
+
+	rdr::U8* pIP = (rdr::U8*)&ip;
+	fprintf(stdout, "readAcceptRequest - timeout(%d), key(%X), ip(%c.%c.%c.%c), info(%s) %d\n", 
+		timeout, key, pIP[0], pIP[1], pIP[2], pIP[3], info_string);
+	handler->acceptRequest(timeout, key, ip, info_string);
+
+	delete info_string;
+}

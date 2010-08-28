@@ -95,3 +95,16 @@ void SMsgReader::readClientCutText()
   is->readBytes(ca.buf, len);
   handler->clientCutText(ca.buf, len);
 }
+
+void SMsgReader::readAcceptRequestResponse() // gon
+{
+	int result = is->readU8();
+	is->skip(2);
+	rdr::U32 key = is->readU32();
+	char* reason = NULL;
+	if (result != 0)
+		reason = is->readString();
+	handler->acceptRequestResponse(result, key, reason);
+	if (reason)
+		delete reason;
+}

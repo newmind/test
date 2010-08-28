@@ -27,6 +27,8 @@
 #include <rfb/SSecurityFactoryStandard.h>
 #include <rfb/Hostname.h>
 #include <rfb/LogWriter.h>
+#include <rfb/ServerCore.h>	// gon
+#include <rfb/VNCSConnectionST.h> // gon
 
 using namespace rfb;
 using namespace win32;
@@ -235,8 +237,32 @@ VNCServerST::queryResult VNCServerWin32::queryConnection(network::Socket* sock,
     *reason = rfb::strDup("Another connection is currently being queried.");
     return VNCServerST::REJECT;
   }
+
+  // gon - queryConnectDialog ¸¦ È°¿ë
   queryConnectDialog = new QueryConnectDialog(sock, userName, this);
-  queryConnectDialog->startDialog();
+  if (!rfb::Server::queryConnectToRemote) { 
+	  queryConnectDialog->startDialog();
+  } else {
+	  rfb::VNCSConnectionST* client = vncServer.getAuthClient();
+	if (client) {
+		rdr::U32 ip = 0; 
+		{	
+			struct sockaddr_in  info;
+			int info_size = sizeof(info);
+			getpeername(sock->getFd(), (struct sockaddr *)&info, &info_size);
+			ip = info.sin_addr.s_addr;
+		}
+		vlog.debug("send accept request to %s, %s", sock->getPeerEndpoint(), client->getInfoString());
+		if (!client->acceptRequest(ip, client->getInfoString())) {
+			queryConnectDialog->setApprove(true);
+			queryConnectionComplete();
+		}			
+	} else {
+		queryConnectDialog->setApprove(true);
+		queryConnectionComplete();
+	}
+  }
+
   return VNCServerST::PENDING;
 }
 
@@ -286,12 +312,19 @@ void VNCServerWin32::processEvent(HANDLE event_) {
       break;
 
     case QueryConnectionComplete:
-      // The Accept/Reject dialog has completed
-      // Get the result, then clean it up
-      vncServer.approveConnection(queryConnectDialog->getSock(),
-                                  queryConnectDialog->isAccepted(),
-                                  "Connection rejected by user");
-      delete queryConnectDialog->join();
+		if (!rfb::Server::queryConnectToRemote) {	// gon
+		  // The Accept/Reject dialog has completed
+		  // Get the result, then clean it up
+		  vncServer.approveConnection(queryConnectDialog->getSock(),
+									  queryConnectDialog->isAccepted(),
+									  "Connection rejected by user");
+		  delete queryConnectDialog->join();
+		} else {
+			vncServer.approveConnection(queryConnectDialog->getSock(),
+				queryConnectDialog->isAccepted(),
+				"Connection rejected by remote user");
+			delete queryConnectDialog;
+		}
       queryConnectDialog = 0;
       break;
 
@@ -308,3 +341,13 @@ void VNCServerWin32::processEvent(HANDLE event_) {
   }
 }
 
+void VNCServerWin32::acceptRequestResponse(rfb::VNCServerST::queryResult result, rdr::U32 key, char* reason) { // gon
+	if (!queryConnectDialog)
+		return;
+
+	if (result == rfb::VNCServerST::ACCEPT)
+		queryConnectDialog->setApprove(true);
+	else
+		queryConnectDialog->setApprove(false);
+	queryConnectionComplete();
+}

@@ -108,6 +108,7 @@ namespace rfb {
       void fillRect(const Rect& r, Pixel pix);
       void imageRect(const Rect& r, void* pixels);
       void copyRect(const Rect& r, int srcX, int srcY);
+	  void acceptRequest(int timeout, unsigned int key, unsigned int ip, char* info_string); // gon
 
       // rdr::FdInStreamBlockCallback interface
       void blockCallback();

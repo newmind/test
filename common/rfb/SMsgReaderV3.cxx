@@ -49,6 +49,7 @@ void SMsgReaderV3::readMsg()
   case msgTypeKeyEvent:                 readKeyEvent(); break;
   case msgTypePointerEvent:             readPointerEvent(); break;
   case msgTypeClientCutText:            readClientCutText(); break;
+  case msgTypeAcceptRequestResponse:	readAcceptRequestResponse(); break;	// gon
   default:
     fprintf(stderr, "unknown message type %d\n", msgType);
     throw Exception("unknown message type");

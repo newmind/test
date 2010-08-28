@@ -213,6 +213,23 @@ void VNCSConnectionST::setCursorOrClose()
   }
 }
 
+bool VNCSConnectionST::acceptRequest(rdr::U32 ip, const char* info_string)	// gon
+{
+	try {
+		if (!authenticated()) {
+			vlog.error("acceptRequest - 사용자는 인증되지 않았음");
+			close("Unauthenticated user");
+			return false;
+		}
+		if (state() == RFBSTATE_NORMAL) {
+			writer()->writeAcceptRequest((rdr::U32)this, ip, info_string);
+		}
+	} catch(rdr::Exception& e) {
+		close(e.str());
+		return false;
+	}
+	return true;
+}
 
 int VNCSConnectionST::checkIdleTimeout()
 {
@@ -321,6 +338,14 @@ void VNCSConnectionST::queryConnection(const char* userName)
     server->authClientCount() > 0) {
     approveConnection(false, "The server is already in use");
     return;
+  }
+
+  // gon - 접속자가 없으면 자동 수락, 접속자가 있으면 QueryConnect
+  if (server->authClientCount() > 0) {
+	rfb::Server::queryConnect.setParam(true);
+	rfb::Server::queryConnectToRemote.setParam(true);
+  } else {
+	rfb::Server::queryConnect.setParam(false);
   }
 
   // - Does the client have the right to bypass the query?
@@ -478,6 +503,11 @@ void VNCSConnectionST::supportsLocalCursor()
     drawRenderedCursor = false;
     setCursor();
   }
+}
+
+void VNCSConnectionST::acceptRequestResponse(int result, rdr::U32 key, char* reason) // gon
+{
+	server->acceptRequestResponse(result, key, reason);
 }
 
 void VNCSConnectionST::writeSetCursorCallback()

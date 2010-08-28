@@ -141,6 +141,7 @@ namespace rfb {
       virtual queryResult queryConnection(network::Socket* sock,
                                           const char* userName,
                                           char** reason) = 0;
+	  virtual void acceptRequestResponse(queryResult result, rdr::U32 key, char* reason) = 0;	// gon
     };
     void setQueryConnectionHandler(QueryConnectionHandler* qch) {
       queryConnectionHandler = qch;
@@ -156,6 +157,11 @@ namespace rfb {
         ? queryConnectionHandler->queryConnection(sock, userName, reason)
         : ACCEPT;
     }
+
+	virtual void acceptRequestResponse(int result, rdr::U32 key, char* reason) { // gon
+		if (queryConnectionHandler)
+			queryConnectionHandler->acceptRequestResponse(result==0? ACCEPT: REJECT, key, reason);
+	}
 
     // approveConnection() is called by the active QueryConnectionHandler,
     // some time after queryConnection() has returned with PENDING, to accept
@@ -179,6 +185,9 @@ namespace rfb {
     // setKeyRemapper() replaces the VNCServerST's default key remapper.
     // NB: A null pointer is valid here.
     void setKeyRemapper(KeyRemapper* kr) { keyRemapper = kr; }
+
+	// gon - 인증된 사용자는 오직 한명이므로, 첫번째 인증된 사용자를 리턴
+	VNCSConnectionST* getAuthClient();
 
   protected:
 

@@ -47,6 +47,7 @@ namespace rfb {
         for (i=sec_types.begin(); i!=sec_types.end(); i++) {
           if ((*i) == secTypeNone) useNone = true;
           else if ((*i) == secTypeVncAuth) useVNC = true;
+		  else if ((*i) == secTypeInnotiveVNC) useVNC = true;
         }
 
         HWND security = GetDlgItem(handle, IDC_ENCRYPTION);
@@ -89,7 +90,8 @@ namespace rfb {
         useNone = isItemChecked(IDC_AUTH_NONE);
         if (useVNC) {
           verifyVncPassword(regKey);
-          regKey.setString(_T("SecurityTypes"), _T("VncAuth"));
+          // regKey.setString(_T("SecurityTypes"), _T("VncAuth"));	// gon
+		  regKey.setString(_T("SecurityTypes"), _T("InnotiveVNC"));	// gon
         } else {
           if (haveVncPassword() && useVncChanged &&
               MsgBox(0, _T("The VNC authentication method is disabled, but a password is still stored for it.\n")

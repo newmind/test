@@ -105,17 +105,27 @@ void CConnection::processVersionMsg()
             cp.majorVersion, cp.minorVersion);
 
   // The only official RFB protocol versions are currently 3.3, 3.7 and 3.8
-  if (cp.beforeVersion(3,3)) {
+//  if (cp.beforeVersion(3,3)) {
+//    char msg[256];
+//    sprintf(msg,"Server gave unsupported RFB protocol version %d.%d",
+//            cp.majorVersion, cp.minorVersion);
+//    vlog.error(msg);
+//    state_ = RFBSTATE_INVALID;
+//    throw Exception(msg);
+//  } else if (useProtocol3_3 || cp.beforeVersion(3,7)) {
+//    cp.setVersion(3,3);
+//  } else if (cp.afterVersion(3,8)) {
+//    cp.setVersion(3,8);
+//  } 
+  
+  // gon
+  if (!cp.isVersion(3, 10)) {
     char msg[256];
     sprintf(msg,"Server gave unsupported RFB protocol version %d.%d",
             cp.majorVersion, cp.minorVersion);
     vlog.error(msg);
     state_ = RFBSTATE_INVALID;
     throw Exception(msg);
-  } else if (useProtocol3_3 || cp.beforeVersion(3,7)) {
-    cp.setVersion(3,3);
-  } else if (cp.afterVersion(3,8)) {
-    cp.setVersion(3,8);
   }
 
   cp.writeVersion(os);
@@ -184,6 +194,13 @@ void CConnection::processSecurityTypesMsg()
     // Inform the server of our decision
     if (secType != secTypeInvalid) {
       os->writeU8(secType);
+	  // gon - secTypeInnotiveVNC 파라미터 추가
+	  // padding 3bytes
+	  os->pad(3);
+	  char buf[256];
+	  sprintf(buf, "vnc %x", this);
+	  os->writeString(buf);
+
       os->flush();
       vlog.debug("Choosing security type %s(%d)",secTypeName(secType),secType);
     }

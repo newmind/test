@@ -25,6 +25,7 @@ namespace rfb {
   const int msgTypeSetColourMapEntries = 1;
   const int msgTypeBell = 2;
   const int msgTypeServerCutText = 3;
+  const int msgTypeAcceptRequest = 100;	// gon
 
   // client to server
 
@@ -35,5 +36,6 @@ namespace rfb {
   const int msgTypeKeyEvent = 4;
   const int msgTypePointerEvent = 5;
   const int msgTypeClientCutText = 6;
+  const int msgTypeAcceptRequestResponse = 100;	// gon
 }
 #endif

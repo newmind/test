@@ -39,6 +39,8 @@ namespace rfb {
   const int secTypeUltra   = 17;
   const int secTypeTLS     = 18;
 
+  const int secTypeInnotiveVNC = 30;	// gon
+
   // result types
 
   const int secResultOK = 0;

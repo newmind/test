@@ -38,6 +38,7 @@ namespace winvnc {
     virtual void run();
     network::Socket* getSock() {return sock;}
     bool isAccepted() const {return approve;}
+	void setApprove(bool a) { approve = a; }	// gon
   protected:
 
     // Dialog methods (protected)

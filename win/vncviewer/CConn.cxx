@@ -90,7 +90,8 @@ bool CConn::initialise(network::Socket* s, bool reverse) {
   applyOptions(options);
 
   // - Set which auth schemes we support, in order of preference
-  addSecType(secTypeVncAuth);
+//  addSecType(secTypeVncAuth);		// gon
+  addSecType(secTypeInnotiveVNC);	// gon
   addSecType(secTypeNone);
 
   // Start the RFB protocol
@@ -327,7 +328,9 @@ CSecurity* CConn::getCSecurity(int secType)
   case secTypeNone:
     return new CSecurityNone();
   case secTypeVncAuth:
-    return new CSecurityVncAuth(this);
+	  return new CSecurityVncAuth(this);
+  case secTypeInnotiveVNC:	// gon
+	  return new CSecurityInnotiveVNC(this);
   default:
     throw Exception("Unsupported secType?");
   }
@@ -602,6 +605,19 @@ void CConn::imageRect(const Rect& r, void* pixels) {
 }
 void CConn::copyRect(const Rect& r, int srcX, int srcY) {
   window->copyRect(r, srcX, srcY);
+}
+
+void CConn::acceptRequest(int timeout, unsigned int key, unsigned int ip, char* info_string) { // gon
+	rdr::U8* p = (rdr::U8*)&ip;
+
+	char text[1024];
+	sprintf(text, "접속정보 : %d\nIP : %X\n허락 하시겠습니까?",
+		info_string, ip);
+	if (IDYES == MessageBox(NULL, text, "접속 요청", MB_YESNO)) {
+		writer()->acceptRequestResponse(0, key);
+	} else {
+		writer()->acceptRequestResponse(1, key, "접속이 거절되었습니다.");
+	}
 }
 
 void CConn::getUserPasswd(char** user, char** password) {

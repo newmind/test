@@ -46,6 +46,7 @@ namespace rfb {
     virtual void readKeyEvent();
     virtual void readPointerEvent();
     virtual void readClientCutText();
+	virtual void readAcceptRequestResponse(); // gon
 
     SMsgReader(SMsgHandler* handler, rdr::InStream* is);
 

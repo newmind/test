@@ -117,6 +117,8 @@ namespace rfb {
     virtual void startRect(const Rect& r, unsigned int enc)=0;
     virtual void endRect()=0;
 
+	virtual void writeAcceptRequest(rdr::U32 key, rdr::U32 ip, const char* info_string) = 0;	// gon
+
     ConnParams* getConnParams() { return cp; }
     rdr::OutStream* getOutStream() { return os; }
     rdr::U8* getImageBuf(int required, int requested=0, int* nPixels=0);

@@ -25,6 +25,7 @@
 int rfb::secTypeNum(const char* name)
 {
   if (strcasecmp(name, "None") == 0)       return secTypeNone;
+  if (strcasecmp(name, "InnotiveVNC") == 0)       return secTypeInnotiveVNC;	// gon
   if (strcasecmp(name, "VncAuth") == 0)    return secTypeVncAuth;
   if (strcasecmp(name, "RA2") == 0)        return secTypeRA2;
   if (strcasecmp(name, "RA2ne") == 0)      return secTypeRA2ne;
@@ -37,6 +38,7 @@ const char* rfb::secTypeName(int num)
 {
   switch (num) {
   case secTypeNone:       return "None";
+  case secTypeInnotiveVNC: return "InnotiveVNC";	// gon
   case secTypeVncAuth:    return "VncAuth";
   case secTypeRA2:        return "RA2";
   case secTypeRA2ne:      return "RA2ne";
