@@ -39,9 +39,9 @@
 //
 // MessageText:
 //
-//  %1: %2
-//  
-//  
+// %1: %2
+// 
+// 
 //
 #define VNC4LogMessage                   0x00000001L
 
