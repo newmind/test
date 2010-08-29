@@ -63,10 +63,10 @@ class winvnc::STrayIcon : public TrayIcon {
 public:
   STrayIcon(STrayIconThread& t) : thread(t),
     vncConfig(_T("vncconfig.exe"), isServiceProcess() ? _T("-noconsole -service") : _T("-noconsole")),
-    vncConnect(_T("winvnc4.exe"), _T("-noconsole -connect")) {
+    vncConnect(_T("innovnc.exe"), _T("-noconsole -connect")) {
 
     // ***
-    SetWindowText(getHandle(), _T("winvnc::IPC_Interface"));
+    SetWindowText(getHandle(), _T("innovnc::IPC_Interface"));
     // ***
 
     SetTimer(getHandle(), 1, 3000, 0);

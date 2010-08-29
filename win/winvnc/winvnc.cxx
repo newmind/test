@@ -115,7 +115,7 @@ static void processParams(int argc, const char* argv[]) {
             host.buf = strDup(ancd.getHostName());
         }
         if (host.buf) {
-          HWND hwnd = FindWindow(0, _T("winvnc::IPC_Interface"));
+          HWND hwnd = FindWindow(0, _T("innovnc::IPC_Interface"));
           if (!hwnd)
             throw rdr::Exception("Unable to locate existing VNC Server.");
           COPYDATASTRUCT copyData;
@@ -128,7 +128,7 @@ static void processParams(int argc, const char* argv[]) {
         }
       } else if (strcasecmp(argv[i], "-disconnect") == 0) {
         runServer = false;
-        HWND hwnd = FindWindow(0, _T("winvnc::IPC_Interface"));
+        HWND hwnd = FindWindow(0, _T("innovnc::IPC_Interface"));
         if (!hwnd)
           throw rdr::Exception("Unable to locate existing VNC Server.");
         COPYDATASTRUCT copyData;
@@ -167,7 +167,7 @@ static void processParams(int argc, const char* argv[]) {
         int j = i;
         i = argc;
         if (rfb::win32::registerService(VNCServerService::Name,
-                                        _T("VNC Server Version 4"),
+                                        _T("InnoVNC Server"),
                                         argc-(j+1), &argv[j+1]))
           MsgBoxOrLog("Registered service successfully");
       } else if (strcasecmp(argv[i], "-unregister") == 0) {
@@ -226,7 +226,7 @@ int main(int argc, const char* argv[]) {
     //freopen("\\\\drupe\\tjr\\WinVNC4.log","ab",stderr);
     //setbuf(stderr, 0);
     initStdIOLoggers();
-    initFileLogger("C:\\temp\\WinVNC4.log");
+    initFileLogger("C:\\temp\\InnoVNC.log");
     rfb::win32::initEventLogLogger(VNCServerService::Name);
 
     // - By default, just log errors to stderr

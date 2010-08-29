@@ -77,11 +77,11 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/FIXED:NO"
 				AdditionalDependencies="ws2_32.lib version.lib comctl32.lib"
-				OutputFile="..\Debug_Unicode/winvnc4.exe"
+				OutputFile="..\Debug_Unicode/innovnc.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\..\Debug_Unicode/winvnc4.pdb"
+				ProgramDatabaseFile=".\..\Debug_Unicode/innovnc.pdb"
 				SubSystem="1"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -172,11 +172,11 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/FIXED:NO"
 				AdditionalDependencies="ws2_32.lib version.lib comctl32.lib"
-				OutputFile="../Debug/winvnc4.exe"
+				OutputFile="../Debug/innovnc.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\..\Debug/winvnc4.pdb"
+				ProgramDatabaseFile=".\..\Debug/innovnc.pdb"
 				SubSystem="1"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -267,10 +267,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="ws2_32.lib version.lib comctl32.lib"
-				OutputFile="../Release/winvnc4.exe"
+				OutputFile="../Release/innovnc.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				ProgramDatabaseFile=".\..\Release/winvnc4.pdb"
+				ProgramDatabaseFile=".\..\Release/innovnc.pdb"
 				SubSystem="1"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -693,11 +693,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\common\javabin\logo150x150.gif"
+				RelativePath="java\logo150x150.gif"
 				>
 			</File>
 			<File
-				RelativePath="java\logo150x150.gif"
+				RelativePath="..\..\common\javabin\logo150x150.gif"
 				>
 			</File>
 			<File
