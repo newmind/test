@@ -32,7 +32,7 @@ namespace rfb {
     namespace MRU {
 
       static const RegKey RegRoot = HKEY_CURRENT_USER;
-      static const TCHAR* RegPath = _T("Software\\RealVNC\\VNCViewer4\\MRU");
+      static const TCHAR* RegPath = _T("Software\\Innotive\\VNCViewer\\MRU");
       static const int MaxMRUEntries = 256;
       static const int MRUEntries = 10;
 

@@ -205,7 +205,7 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prevInst, char* cmdLine, int cmdSho
 
 #ifdef _DIALOG_CAPTURE
     if (captureDialogs) {
-      CConn::userConfigKey.openKey(HKEY_CURRENT_USER, _T("Software\\RealVNC\\VNCViewer4"));
+      CConn::userConfigKey.openKey(HKEY_CURRENT_USER, _T("Software\\Innotive\\VNCViewer"));
       OptionsDialog::global.showDialog(0, true);
       return 0;
     }
@@ -221,10 +221,10 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prevInst, char* cmdLine, int cmdSho
     if (!configFiles.empty() || !hosts.empty() || acceptIncoming) {
       // - Configure the registry configuration reader
       win32::RegConfigThread config;
-      config.start(HKEY_CURRENT_USER, _T("Software\\RealVNC\\VNCViewer4"));
+      config.start(HKEY_CURRENT_USER, _T("Software\\Innotive\\VNCViewer"));
 
       // - Tell the rest of VNC Viewer where to write config data to
-      CConn::userConfigKey.createKey(HKEY_CURRENT_USER, _T("Software\\RealVNC\\VNCViewer4"));
+      CConn::userConfigKey.createKey(HKEY_CURRENT_USER, _T("Software\\Innotive\\VNCViewer"));
 
       if (acceptIncoming) {
         int port = 5500;

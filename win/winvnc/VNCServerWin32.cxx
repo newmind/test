@@ -38,7 +38,7 @@ using namespace network;
 static LogWriter vlog("VNCServerWin32");
 
 
-const TCHAR* winvnc::VNCServerWin32::RegConfigPath = _T("Software\\RealVNC\\WinVNC4");
+const TCHAR* winvnc::VNCServerWin32::RegConfigPath = _T("Software\\Innotive\\InnoVNC");
 
 
 static IntParameter http_port("HTTPPortNumber",

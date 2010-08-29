@@ -110,7 +110,7 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, char* cmdLine, int cmdShow) {
 
       // Create the required configuration registry key
       RegKey rootKey;
-      rootKey.createKey(configKey, _T("Software\\RealVNC\\WinVNC4"));
+      rootKey.createKey(configKey, _T("Software\\Innotive\\InnoVNC"));
   
       // Override whatever security it already had (NT only)
       bool warnOnChangePassword = false;
@@ -144,7 +144,7 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, char* cmdLine, int cmdShow) {
 
       // Start a RegConfig thread, to load in existing settings
       RegConfigThread config;
-      config.start(configKey, _T("Software\\RealVNC\\WinVNC4"));
+      config.start(configKey, _T("Software\\Innotive\\InnoVNC"));
 
       // Build the dialog
       std::list<PropSheetPage*> pages;

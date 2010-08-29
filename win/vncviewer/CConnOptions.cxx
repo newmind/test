@@ -301,7 +301,7 @@ void CConnOptions::writeToFile(const char* filename) {
 
 void CConnOptions::writeDefaults() {
   RegKey key;
-  key.createKey(HKEY_CURRENT_USER, _T("Software\\RealVNC\\VNCviewer4"));
+  key.createKey(HKEY_CURRENT_USER, _T("Software\\Innotive\\VNCViewer"));
   key.setBool(_T("UseLocalCursor"), useLocalCursor);
   key.setBool(_T("UseDesktopResize"), useDesktopResize);
   key.setBool(_T("FullScreen"), fullScreen);
