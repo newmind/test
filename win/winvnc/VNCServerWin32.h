@@ -63,7 +63,7 @@ namespace winvnc {
 
     // Call used to notify VNCServerST of user accept/reject query completion
     // CALLED FROM AcceptConnectDialog THREAD
-    void queryConnectionComplete();
+    void queryConnectionComplete(const void* data = NULL, int len = 0);
 
     // Where to read the configuration settings from
     static const TCHAR* RegConfigPath;

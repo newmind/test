@@ -266,8 +266,8 @@ VNCServerST::queryResult VNCServerWin32::queryConnection(network::Socket* sock,
   return VNCServerST::PENDING;
 }
 
-void VNCServerWin32::queryConnectionComplete() {
-  queueCommand(QueryConnectionComplete, 0, 0, false);
+void VNCServerWin32::queryConnectionComplete(const void* data, int len) {
+  queueCommand(QueryConnectionComplete, data, len, false);
 }
 
 
@@ -321,8 +321,13 @@ void VNCServerWin32::processEvent(HANDLE event_) {
 		  delete queryConnectDialog->join();
 		} else {
 			vncServer.approveConnection(queryConnectDialog->getSock(),
-				queryConnectDialog->isAccepted(),
-				"Connection rejected by remote user");
+										queryConnectDialog->isAccepted(),
+										(commandData && commandDataLen > 0)
+											? (char*)commandData
+											: "Connection rejected by remote user"
+					   				  );
+			if (commandData)
+				delete (char*)commandData;
 			delete queryConnectDialog;
 		}
       queryConnectDialog = 0;
@@ -345,9 +350,13 @@ void VNCServerWin32::acceptRequestResponse(rfb::VNCServerST::queryResult result,
 	if (!queryConnectDialog)
 		return;
 
-	if (result == rfb::VNCServerST::ACCEPT)
+	if (result == rfb::VNCServerST::ACCEPT) {
 		queryConnectDialog->setApprove(true);
-	else
+		queryConnectionComplete();
+	} else {
 		queryConnectDialog->setApprove(false);
-	queryConnectionComplete();
+		char* psz = reason && strlen(reason) > 0? strDup(reason): NULL;
+		int len = psz? strlen(psz): 0;
+		queryConnectionComplete(psz, len);
+	}
 }
