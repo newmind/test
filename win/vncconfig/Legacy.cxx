@@ -193,16 +193,16 @@ void LegacyPage::LoadPrefs()
 
       void LegacyPage::LoadUserPrefs(const RegKey& key)
       {
-        if (key.getBool(_T("HTTPConnect"), true))
-          regKey.setInt(_T("HTTPPortNumber"), key.getInt(_T("PortNumber"), 5900)-100);
-        else
-          regKey.setInt(_T("HTTPPortNumber"), 0);
-        regKey.setInt(_T("PortNumber"), key.getBool(_T("SocketConnect")) ? key.getInt(_T("PortNumber"), 5900) : 0);
+//        if (key.getBool(_T("HTTPConnect"), false))	// gon
+//          regKey.setInt(_T("HTTPPortNumber"), key.getInt(_T("PortNumber"), 5100)-100);
+//        else
+        regKey.setInt(_T("HTTPPortNumber"), 0);
+        regKey.setInt(_T("PortNumber"), key.getBool(_T("SocketConnect")) ? key.getInt(_T("PortNumber"), 5100) : 0); // gon
         if (key.getBool(_T("AutoPortSelect"), false)) {
           MsgBox(0, _T("The AutoPortSelect setting is not supported by this release.")
-                    _T("The port number will default to 5900."),
+                    _T("The port number will default to 5100."),
                     MB_ICONWARNING | MB_OK);
-          regKey.setInt(_T("PortNumber"), 5900);
+          regKey.setInt(_T("PortNumber"), 5100);	// gon
         }
         regKey.setInt(_T("IdleTimeout"), key.getInt(_T("IdleTimeout"), 0));
 

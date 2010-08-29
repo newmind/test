@@ -28,9 +28,9 @@
 #include <network/TcpSocket.h>
 
 static rfb::IntParameter http_port("HTTPPortNumber",
-  "TCP/IP port on which the server will serve the Java applet VNC Viewer ", 5800);
+  "TCP/IP port on which the server will serve the Java applet VNC Viewer ", 0);
 static rfb::IntParameter port_number("PortNumber",
-  "TCP/IP port on which the server will accept connections", 5900);
+  "TCP/IP port on which the server will accept connections", 5100);
 static rfb::StringParameter hosts("Hosts",
   "Filter describing which hosts are allowed access to this server", "+");
 static rfb::BoolParameter localHost("LocalHost",
@@ -88,11 +88,11 @@ namespace rfb {
         : PropSheetPage(GetModuleHandle(0), MAKEINTRESOURCE(IDD_CONNECTIONS)), regKey(rk) {}
       void initDialog() {
         vlog.debug("set IDC_PORT %d", (int)port_number);
-        setItemInt(IDC_PORT, port_number ? port_number : 5900);
+        setItemInt(IDC_PORT, port_number ? port_number : 5100);
         setItemChecked(IDC_RFB_ENABLE, port_number != 0);
         setItemInt(IDC_IDLE_TIMEOUT, rfb::Server::idleTimeout);
         vlog.debug("set IDC_HTTP_PORT %d", (int)http_port);
-        setItemInt(IDC_HTTP_PORT, http_port ? http_port : 5800);
+        setItemInt(IDC_HTTP_PORT, http_port ? http_port : 0);
         setItemChecked(IDC_HTTP_ENABLE, http_port != 0);
         enableItem(IDC_HTTP_PORT, http_port != 0);
         setItemChecked(IDC_LOCALHOST, localHost);

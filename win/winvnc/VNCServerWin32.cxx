@@ -42,9 +42,9 @@ const TCHAR* winvnc::VNCServerWin32::RegConfigPath = _T("Software\\RealVNC\\WinV
 
 
 static IntParameter http_port("HTTPPortNumber",
-  "TCP/IP port on which the server will serve the Java applet VNC Viewer ", 5800);
+  "TCP/IP port on which the server will serve the Java applet VNC Viewer ", 0);
 static IntParameter port_number("PortNumber",
-  "TCP/IP port on which the server will accept connections", 5900);
+  "TCP/IP port on which the server will accept connections", 5100);
 static StringParameter hosts("Hosts",
   "Filter describing which hosts are allowed access to this server", "+0.0.0.0/0.0.0.0");
 static BoolParameter localHost("LocalHost",
