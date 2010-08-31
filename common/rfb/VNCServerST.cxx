@@ -132,12 +132,16 @@ void VNCServerST::removeSocket(network::Socket* sock) {
   std::list<VNCSConnectionST*>::iterator ci;
   for (ci = clients.begin(); ci != clients.end(); ci++) {
     if ((*ci)->getSock() == sock) {
+
+		if (authClientCount() == 0) { // gon
+			// notify, queryConnection 요청중이라면 자동 수락 할 수 있게.
+			// queryConnectDialg 삭제 처리
+			if (queryConnectionHandler)
+				queryConnectionHandler->onClientClosed(*ci);
+		}
+
       // - Delete the per-Socket resources
       delete *ci;
-
-	  if (authClientCount() == 0) { // gon
-		// notify, queryConnection 요청중이라면 자동 수락 할 수 있게.
-	  }
 
       // - Check that the desktop object is still required
       if (authClientCount() == 0 && desktopStarted) {

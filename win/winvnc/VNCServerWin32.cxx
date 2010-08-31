@@ -234,6 +234,7 @@ VNCServerST::queryResult VNCServerWin32::queryConnection(network::Socket* sock,
   if (queryOnlyIfLoggedOn && CurrentUserToken().noUserLoggedOn())
     return VNCServerST::ACCEPT;
   if (queryConnectDialog) {
+	vlog.debug("Another connection is currently being queried. host %s", sock->getPeerEndpoint());
     *reason = rfb::strDup("Another connection is currently being queried.");
     return VNCServerST::REJECT;
   }
@@ -358,5 +359,15 @@ void VNCServerWin32::acceptRequestResponse(rfb::VNCServerST::queryResult result,
 		char* psz = reason && strlen(reason) > 0? strDup(reason): NULL;
 		int len = psz? strlen(psz): 0;
 		queryConnectionComplete(psz, len);
+	}
+}
+
+void VNCServerWin32::onClientClosed(rfb::VNCSConnectionST* client)
+{
+	if (vncServer.getAuthClient() == 0
+		&& queryConnectDialog) {
+		// 자동 수락 처리
+		queryConnectDialog->setApprove(true);
+		queryConnectionComplete();
 	}
 }

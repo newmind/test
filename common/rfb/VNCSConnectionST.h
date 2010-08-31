@@ -162,6 +162,8 @@ namespace rfb {
     AccessRights accessRights;
 
     CharArray closeReason;
+
+	bool isQueryingConfirm;	// 제어권 있는 사용자일때만 사용됨, qeury중인지 체크할때 사용
   };
 }
 #endif

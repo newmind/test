@@ -47,6 +47,8 @@ VNCSConnectionST::VNCSConnectionST(VNCServerST* server_, network::Socket *s,
 
   // Add this client to the VNCServerST
   server->clients.push_front(this);
+
+  isQueryingConfirm = false;
 }
 
 
@@ -223,6 +225,8 @@ bool VNCSConnectionST::acceptRequest(rdr::U32 ip, const char* info_string)	// go
 		}
 		if (state() == RFBSTATE_NORMAL) {
 			writer()->writeAcceptRequest((rdr::U32)this, ip, info_string);
+			lastEventTime = time(0);
+			isQueryingConfirm = true;
 		}
 	} catch(rdr::Exception& e) {
 		close(e.str());
@@ -237,6 +241,8 @@ int VNCSConnectionST::checkIdleTimeout()
   if (idleTimeout == 0) return 0;
   if (state() != RFBSTATE_NORMAL && idleTimeout < 15)
     idleTimeout = 15; // minimum of 15 seconds while authenticating
+  if (isQueryingConfirm)
+	  idleTimeout = 15; // minimum of 15 seconds while querying
   time_t now = time(0);
   if (now < lastEventTime) {
     // Someone must have set the time backwards.  Set lastEventTime so that the
@@ -507,6 +513,8 @@ void VNCSConnectionST::supportsLocalCursor()
 
 void VNCSConnectionST::acceptRequestResponse(int result, rdr::U32 key, char* reason) // gon
 {
+	lastEventTime = time(0);
+	isQueryingConfirm = false;
 	server->acceptRequestResponse(result, key, reason);
 }
 

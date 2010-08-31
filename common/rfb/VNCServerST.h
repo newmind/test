@@ -142,6 +142,11 @@ namespace rfb {
                                           const char* userName,
                                           char** reason) = 0;
 	  virtual void acceptRequestResponse(queryResult result, rdr::U32 key, char* reason) = 0;	// gon
+
+	  // client로의 접속이 끊긴후 delete 되기전에 날아오는 이벤트
+	  // notify, queryConnection 요청중이라면 자동 수락 할 수 있게.
+	  // queryConnectDialg 삭제 처리등을 해야함
+	  virtual void onClientClosed(VNCSConnectionST* client) = 0;
     };
     void setQueryConnectionHandler(QueryConnectionHandler* qch) {
       queryConnectionHandler = qch;

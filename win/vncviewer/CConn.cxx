@@ -611,8 +611,8 @@ void CConn::acceptRequest(int timeout, unsigned int key, unsigned int ip, char* 
 	rdr::U8* p = (rdr::U8*)&ip;
 
 	char text[1024];
-	sprintf(text, "접속정보 : %d\nIP : %X\n허락 하시겠습니까?",
-		info_string, ip);
+	sprintf(text, "접속정보 : %d\nIP : %d.%d.%d.%d\n허락 하시겠습니까?",
+		info_string, (int)p[0], (int)p[1], (int)p[2], (int)p[3]);
 	if (IDYES == MessageBox(NULL, text, "접속 요청", MB_YESNO)) {
 		writer()->acceptRequestResponse(0, key);
 	} else {
