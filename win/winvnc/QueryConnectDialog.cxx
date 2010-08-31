@@ -98,3 +98,16 @@ BOOL QueryConnectDialog::dialogProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
     return Dialog::dialogProc(hwnd, msg, wParam, lParam);
   }
 }
+
+//- QueryConnectRemoteDialog
+
+QueryConnectRemoteDialog::QueryConnectRemoteDialog(network::Socket* sock_,
+												   const char* userName_,
+												   VNCServerWin32* s)
+: QueryConnectDialog(sock_, userName_, s) {
+
+}
+
+void QueryConnectRemoteDialog::run() {
+	; // do nothing, just exit
+}

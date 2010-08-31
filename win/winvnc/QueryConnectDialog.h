@@ -56,6 +56,11 @@ namespace winvnc {
     VNCServerWin32* server;
   };
 
+  class QueryConnectRemoteDialog : public QueryConnectDialog {
+  public:
+	  QueryConnectRemoteDialog(network::Socket* sock, const char* userName, VNCServerWin32* s);
+	  virtual void run();	// 아무것도 하지 않음, 그냥 스레드 종료되게 함
+};
 };
 
 #endif

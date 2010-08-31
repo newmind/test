@@ -240,10 +240,13 @@ VNCServerST::queryResult VNCServerWin32::queryConnection(network::Socket* sock,
   }
 
   // gon - queryConnectDialog 를 활용
-  queryConnectDialog = new QueryConnectDialog(sock, userName, this);
   if (!rfb::Server::queryConnectToRemote) { 
+	  queryConnectDialog = new QueryConnectDialog(sock, userName, this);
 	  queryConnectDialog->startDialog();
   } else {
+	  queryConnectDialog = new QueryConnectRemoteDialog(sock, userName, this);
+	  queryConnectDialog->startDialog();
+
 	  rfb::VNCSConnectionST* client = vncServer.getAuthClient();
 	if (client) {
 		rdr::U32 ip = 0; 
@@ -329,7 +332,7 @@ void VNCServerWin32::processEvent(HANDLE event_) {
 					   				  );
 			if (commandData)
 				delete (char*)commandData;
-			delete queryConnectDialog;
+			delete queryConnectDialog->join();
 		}
       queryConnectDialog = 0;
       break;
@@ -366,6 +369,7 @@ void VNCServerWin32::onClientClosed(rfb::VNCSConnectionST* client)
 {
 	if (vncServer.getAuthClient() == 0
 		&& queryConnectDialog) {
+		// 제어권이 있는 사용자가 제어권 요청을 받는중에 종료했으므로
 		// 자동 수락 처리
 		queryConnectDialog->setApprove(true);
 		queryConnectionComplete();
