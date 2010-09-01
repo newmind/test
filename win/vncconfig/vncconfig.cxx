@@ -152,10 +152,10 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, char* cmdLine, int cmdShow) {
       auth.setWarnPasswdInsecure(warnOnChangePassword);
       ConnectionsPage conn(rootKey); pages.push_back(&conn);
       InputsPage inputs(rootKey); pages.push_back(&inputs);
-      SharingPage sharing(rootKey); pages.push_back(&sharing);
-      DesktopPage desktop(rootKey); pages.push_back(&desktop);
-      HookingPage hooks(rootKey); pages.push_back(&hooks);
-      LegacyPage legacy(rootKey, configKey == HKEY_CURRENT_USER); pages.push_back(&legacy);
+      //SharingPage sharing(rootKey); pages.push_back(&sharing);
+      //DesktopPage desktop(rootKey); pages.push_back(&desktop);
+      //HookingPage hooks(rootKey); pages.push_back(&hooks);
+      //LegacyPage legacy(rootKey, configKey == HKEY_CURRENT_USER); pages.push_back(&legacy);
 
       // Load the default icon to use
       HICON icon = (HICON)LoadImage(inst, MAKEINTRESOURCE(IDI_ICON), IMAGE_ICON, 0, 0, LR_SHARED);

@@ -92,9 +92,9 @@ void VNCServerWin32::processAddressChange(network::SocketListener* sock_) {
     return;
 
   // Tool-tip prefix depends on server mode
-  const TCHAR* prefix = _T("VNC Server (User):");
+  const TCHAR* prefix = _T("InnoVNC Server (User):");
   if (isServiceProcess())
-    prefix = _T("VNC Server (Service):");
+    prefix = _T("InnoVNC Server (Service):");
 
   // Fetch the list of addresses
   std::list<char*> addrs;

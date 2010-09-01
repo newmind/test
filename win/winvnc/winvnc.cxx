@@ -40,7 +40,7 @@ using namespace win32;
 
 static LogWriter vlog("main");
 
-TStr rfb::win32::AppName("VNC Server");
+TStr rfb::win32::AppName("InnoVNC Server");
 
 
 static bool runAsService = false;
