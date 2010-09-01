@@ -11,3 +11,5 @@ Release
 _UpgradeReport_Files
 UpgradeLog.XML
 *.suo
+messages.res
+MSG00001.bin
