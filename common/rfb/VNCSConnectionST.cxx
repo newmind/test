@@ -515,6 +515,8 @@ void VNCSConnectionST::acceptRequestResponse(int result, rdr::U32 key, char* rea
 {
 	lastEventTime = time(0);
 	isQueryingConfirm = false;
+	vlog.info("Accept request response from %s : %s %s", 
+		getPeerEndpoint(), result==0?"ACCEPT":"REJECT", reason?reason:"");
 	server->acceptRequestResponse(result, key, reason);
 }
 

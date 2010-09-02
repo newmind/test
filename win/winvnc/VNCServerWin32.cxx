@@ -256,7 +256,7 @@ VNCServerST::queryResult VNCServerWin32::queryConnection(network::Socket* sock,
 			getpeername(sock->getFd(), (struct sockaddr *)&info, &info_size);
 			ip = info.sin_addr.s_addr;
 		}
-		vlog.debug("send accept request to %s, %s", sock->getPeerEndpoint(), client->getInfoString());
+		vlog.debug("Send accept request to %s, %s", sock->getPeerEndpoint(), client->getInfoString());
 		if (!client->acceptRequest(ip, client->getInfoString())) {
 			queryConnectDialog->setApprove(true);
 			queryConnectionComplete();
@@ -324,6 +324,10 @@ void VNCServerWin32::processEvent(HANDLE event_) {
 									  "Connection rejected by user");
 		  delete queryConnectDialog->join();
 		} else {
+			vlog.debug("approveConnection %s : %s", 
+				queryConnectDialog->getSock()?queryConnectDialog->getSock()->getPeerEndpoint(): "none",
+				queryConnectDialog->isAccepted()? "ACCEPT": "REJECT");
+
 			vncServer.approveConnection(queryConnectDialog->getSock(),
 										queryConnectDialog->isAccepted(),
 										(commandData && commandDataLen > 0)
@@ -371,6 +375,7 @@ void VNCServerWin32::onClientClosed(rfb::VNCSConnectionST* client)
 		&& queryConnectDialog) {
 		// 제어권이 있는 사용자가 제어권 요청을 받는중에 종료했으므로
 		// 자동 수락 처리
+		vlog.info("제어권을 가진 사용자가 제어권 요청에 대한 응답없이 종료됨, 제어권 자동넘김");
 		queryConnectDialog->setApprove(true);
 		queryConnectionComplete();
 	}
